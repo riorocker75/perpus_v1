@@ -54,7 +54,6 @@
                             <select class="form-control select2" style="width: 100%;" name="role" required>
                                 <option selected value="">-- Pilih Role --</option>
                                 <option value="1">Admin</option>
-                                <option value="2">Kepala Puskesmas</option>
                             </select>
                     </div>
 

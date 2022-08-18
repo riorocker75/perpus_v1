@@ -10,15 +10,12 @@ use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Hash;
 
-use App\Models\Pasien;
-use App\Models\Rekam;
-use App\Models\Rujukan;
-use App\Models\Kwitansi;
-use App\Models\Pegawai;
-use App\Models\Poli;
+
+use App\Models\Buku;
+use App\Models\Anggota;
+use App\Models\Transaksi;
 use App\Models\User;
 use App\Models\Admin;
-use App\Models\Dokter;
 
 
 
@@ -56,6 +53,218 @@ class AdminCtrl extends Controller
           return view('admin.admin');
     }
 
+    // anggota
+
+    function anggota(){
+        $data= Anggota::orderBy('id','desc')->get();
+        return view('admin.anggota_data',[
+            'data' => $data
+        ]);
+    }
+    function anggota_act(Request $request){
+        $request->validate([
+            'nama' => 'required',
+        ]);
+
+         $date=date('Y-m-d');
+
+         DB::table('anggota')->insert([
+            'nama' => $request->nama,
+            'tanggal_lahir'=> $request->tgl_lhr,
+            'tempat_lahir' => $request->tmp_lhr,
+            'jenis_kelamin'=> $request->kelamin,
+            'tingkatan'=> $request->tingkatan,
+            'tahun_masuk'=> $request->tahun_masuk,
+            'tanggal' => $date,
+            'status' => 1
+        ]);
+
+        return redirect('/dashboard/anggota/data')->with('alert-success','Data diri anda sudah terkirim');
+
+    }
+    function anggota_add(){
+
+        return view('admin.anggota_add');
+
+    }
+    function anggota_edit($id){
+        $data=Anggota::where('id',$id)->get();
+        return view('admin.anggota_edit',[
+            'data' =>$data
+        ]);
+
+    }
+    function anggota_update(Request $request){
+        $request->validate([
+            'nama' => 'required',
+        ]);
+            $id=$request->id;
+         $date=date('Y-m-d');
+
+         DB::table('anggota')->where('id',$id)->update([
+            'nama' => $request->nama,
+            'tanggal_lahir'=> $request->tgl_lhr,
+            'tempat_lahir' => $request->tmp_lhr,
+            'jenis_kelamin'=> $request->kelamin,
+            'tingkatan'=> $request->tingkatan,
+            'tahun_masuk'=> $request->tahun_masuk,
+            'tanggal' => $date,
+            'status' => 1
+        ]);
+
+        return redirect('/dashboard/anggota/data')->with('alert-success','Data terupdate');
+
+    }
+    function anggota_delete($id){
+        Anggota::where('id',$id)->delete();
+        return redirect('/dashboard/anggota/data')->with('alert-success','Data terhapus');
+
+    }
+    
+
+    // buku sekolah
+    function buku_sekolah(){
+        $data= Buku::where('jenis',1)->orderBy('id','desc')->get();
+        return view('admin.buku_sekolah_data',[
+            'data' => $data
+        ]);
+
+    }
+    function buku_sekolah_act(Request $request){
+        $request->validate([
+            'judul' => 'required',
+        ]);
+
+        $date=date('Y-m-d h:i:s');
+
+         DB::table('buku')->insert([
+            'judul' => $request->judul,
+            'penulis'=> $request->penulis,
+            'penerbit' => $request->penerbit,
+            'tahun_terbit'=> $request->tahun_terbit,
+            'jumlah'=> $request->jumlah,
+            'lokasi'=> $request->lokasi,
+            'jenis'=> 1,
+            'tanggal' => $date,
+            'status' => 1
+        ]);
+
+        return redirect('/dashboard/buku_sekolah/data')->with('alert-success','Data diri anda sudah terkirim');
+
+    }
+    function buku_sekolah_add(){
+        return view('admin.buku_sekolah_add');
+    }
+    function buku_sekolah_edit($id){
+        $data=Buku::where('id',$id)->get();
+        return view('admin.buku_sekolah_edit',[
+            'data' => $data
+        ]);
+    }
+    function buku_sekolah_update(Request $request){
+        $request->validate([
+            'judul' => 'required',
+        ]);
+        $id=$request->id;
+       
+
+         DB::table('buku')->where('id',$id)->update([
+            'judul' => $request->judul,
+            'penulis'=> $request->penulis,
+            'penerbit' => $request->penerbit,
+            'tahun_terbit'=> $request->tahun_terbit,
+            'jumlah'=> $request->jumlah,
+            'lokasi'=> $request->lokasi
+        ]);
+
+        return redirect('/dashboard/buku_sekolah/data')->with('alert-success','Data diri anda sudah terkirim');
+    
+    }
+    function buku_sekolah_delete($id){
+        Buku::where('id',$id)->delete();
+        return redirect('/dashboard/buku_sekolah/data')->with('alert-success','Data diri anda sudah terkirim');
+
+    }
+
+    // buku cerita
+    function buku_cerita(){
+        $data=Buku::where('jenis',2)->orderBy('id','desc')->get();
+        return view('admin.buku_cerita_data',[
+            'data' => $data
+        ]);
+
+    }
+    function buku_cerita_act(Request $request){
+        $request->validate([
+            'judul' => 'required',
+        ]);
+
+         $date=date('Y-m-d h:i:s');
+
+         DB::table('buku')->insert([
+            'judul' => $request->judul,
+            'penulis'=> $request->penulis,
+            'penerbit' => $request->penerbit,
+            'tahun_terbit'=> $request->tahun_terbit,
+            'jumlah'=> $request->jumlah,
+            'lokasi'=> $request->lokasi,
+            'jenis'=> 2,
+            'tanggal' => $date,
+            'status' => 1
+        ]);
+
+        return redirect('/dashboard/buku_cerita/data')->with('alert-success','Data diri anda sudah terkirim');
+
+    }
+    function buku_cerita_add(){
+       return view('admin.buku_cerita_add');
+    }
+    function buku_cerita_edit($id){
+        $data=Buku::where('id',$id)->get();
+        return view('admin.buku_cerita_edit',[
+            'data' => $data
+        ]);
+    }
+    function buku_cerita_update(Request $request){
+        $request->validate([
+            'judul' => 'required',
+        ]);
+        $id=$request->id;
+
+         DB::table('buku')->where('id',$id)->update([
+            'judul' => $request->judul,
+            'penulis'=> $request->penulis,
+            'penerbit' => $request->penerbit,
+            'tahun_terbit'=> $request->tahun_terbit,
+            'jumlah'=> $request->jumlah,
+            'lokasi'=> $request->lokasi
+        ]);
+
+        return redirect('/dashboard/buku_cerita/data')->with('alert-success','Data diri anda sudah terkirim');
+        
+    }
+    
+    function buku_cerita_delete($id){
+        Buku::where('id',$id)->delete();
+        return redirect('/dashboard/buku_cerita/data')->with('alert-success','Data diri anda sudah terkirim');
+
+    }
+
+
+    // transaksi
+    function transaksi(){
+
+    }
+    function transaksi_act(Request $request){
+    }
+    function transaksi_add(){
+    }
+    function transaksi_edit($id){
+    }
+    function transaksi_update(Request $request){
+    }
+    function transaksi_delete($id){
+    }
 
     // pasien
     function pasien(){

@@ -162,6 +162,25 @@
         }
     }
 
+    function tingkatan($status){
+        switch($status){
+           case 'paud':
+               echo "PAUD";
+                break;
+
+              case 'tk':
+               echo "Taman Kanak-kanak";
+                break;  
+            case 'sd':
+                echo "Sekolah Dasar";
+                    break;   
+          
+            default:
+               echo "tidak ada";
+                break;
+       }
+   }
+
     function role_user($level){
          switch($level){
             case 1:

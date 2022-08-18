@@ -29,15 +29,15 @@
   <div style="text-align:center;margin:30px 0">
 
     <img src="{{url('/logo/pancabudi.png')}}" style="width:120px;height:120px" alt="" srcset="">&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="{{url('/logo/logo.png')}}" style="width:120px;height:120px" alt="" srcset="">
+    {{-- <img src="{{url('/logo/logo.png')}}" style="width:120px;height:120px" alt="" srcset=""> --}}
   </div>
 
  <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a  class="h1"><b>Selamat Datang</b></a>
+      <a  class="h1"><b>Login</b></a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Sistem Informasi Puskesmas</p>
+      <p class="login-box-msg">Sistem Informasi Perpustakaan</p>
 
     <form action="{{ url('/login/cek') }}" method="post">
         @csrf  

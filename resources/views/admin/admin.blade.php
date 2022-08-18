@@ -22,15 +22,14 @@
     </div>  
      <div style="text-align:center;margin:30px 0">
 
-    <img src="{{url('/logo/pancabudi.png')}}" style="width:120px;height:120px" alt="" srcset="">&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="{{url('/logo/logo.png')}}" style="width:120px;height:120px" alt="" srcset="">
+   
   </div>
     <section class="content">
         @php
-            $jlh_pasien= App\Models\Pasien::where('status',1)->count();; 
-            $jlh_rekam= App\Models\Rekam::where('status',1)->count();;   
-            $jlh_rujuk= App\Models\Rujukan::all()->count();;   
-            $jlh_dokter= App\Models\Dokter::all()->count();;   
+            $jlh_buku_sekolah= App\Models\Buku::where('jenis',1)->count(); 
+            $jlh_buku_cerita= App\Models\Buku::where('jenis',2)->count();  
+            $jlh_anggota= App\Models\Anggota::all()->count(); 
+            $jlh_transaski= App\Models\Transaksi::all()->count();   
 
         @endphp
       <div class="container-fluid">
@@ -39,14 +38,14 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{$jlh_pasien}}</h3>
+                            <h3>{{$jlh_buku_sekolah}}</h3>
 
-                            <p>Pasien</p>
+                            <p>Buku Sekolah</p>
                         </div>
                         <div class="icon">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         </div>
-                        <a href="{{url('/dashboard/pasien/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{url('/dashboard/buku_sekolah/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                  </div>
 
@@ -54,14 +53,14 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{$jlh_rekam}}</h3>
+                            <h3>{{$jlh_buku_cerita}}</h3>
 
-                            <p>Rekam Medik</p>
+                            <p>Buku Cerita</p>
                         </div>
                         <div class="icon">
                         <i class="fa fa-book" aria-hidden="true"></i>
                         </div>
-                        <a href="{{url('/dashboard/rekam/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{url('/dashboard/buku_cerita/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -70,14 +69,14 @@
                         <!-- small box -->
                         <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>{{$jlh_rujuk}}</h3>
+                            <h3>{{$jlh_anggota}}</h3>
 
-                            <p>Rujukan</p>
+                            <p>Anggota</p>
                         </div>
                         <div class="icon">
-                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <i class="fa fa-users" aria-hidden="true"></i>
                         </div>
-                        <a href="{{url('/dashboard/rujuk/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{url('/dashboard/anggota/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -86,49 +85,18 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{$jlh_dokter}}</h3>
+                            <h3>{{$jlh_transaski}}</h3>
 
-                            <p>Dokter</p>
+                            <p>Transaksi</p>
                         </div>
                         <div class="icon">
-                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <i class="fa fa-book" aria-hidden="true"></i>
                         </div>
-                        <a href="{{url('/dashboard/dokter/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{url('/dashboard/transaksi/data')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
          </div>
 
-         <div class="card">
-            <div class="card-header">
-              Data Poli terkini
-          
-            </div>
-            <div class="card-body">
-
-              @php
-                  $poli = DB::table('rekam')
-                 ->select('id_poli', DB::raw('count(*) as total'))
-                 ->groupBy('id_poli')
-                 ->get();
-              @endphp
-
-              @foreach ($poli as $item)
-                  
-                @php
-                    $cek=App\Models\Poli::where('id',$item->id_poli)->get();
-
-                @endphp
-                @foreach ($cek as $cp)
-                   <p>
-                    {{$cp->prosedur}} : {{$item->total}} pasien
-                     </p> 
-                @endforeach
-
-            
-              @endforeach
-              {{-- {{$cek->prosedur}} --}}
-            </div>
-         </div>
 
 
       </div>  
